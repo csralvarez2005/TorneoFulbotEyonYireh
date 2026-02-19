@@ -343,3 +343,28 @@ a:hover{
     }
 }
 
+/* Tablet */
+@media screen and (max-width: 999px){
+    .carousel .list .item {
+        width: 100%;
+        height: 100%;
+        left: 0 !important;
+        top: 0 !important;
+        border-radius: 0;
+        background-size: cover;   /* asegura que cubra todo */
+        background-position: center; /* centra la imagen */
+    }
+}
+
+/* Móvil */
+@media screen and (max-width: 690px){
+    .carousel .list .item {
+        width: 100%;
+        height: 100%;
+        left: 0 !important;
+        top: 0 !important;
+        border-radius: 0;
+        background-size: cover;   /* adapta al ancho/alto */
+        background-position: center; /* evita cortes raros */
+    }
+}
