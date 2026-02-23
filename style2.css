@@ -1,0 +1,319 @@
+/* ========================= */
+/* VIDEO COVERFLOW SECTION */
+/* ========================= */
+
+.video-section {
+    background: linear-gradient(to bottom, #0f0f0f, #000000);
+    padding: 80px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.video-title {
+    text-align: center;
+    color: #ffffff;
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 70px;
+}
+
+/* ========================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================= */
+
+.video-carousel {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    /* 🔥 Más alto para formato vertical */
+    perspective: 1800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+}
+
+.video-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+/* ========================= */
+/* ITEM INDIVIDUAL */
+/* ========================= */
+
+.video-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 320px;
+    /* 🔥 ancho optimizado */
+    aspect-ratio: 9 / 16;
+    /* 🔥 FORMATO REEL REAL */
+
+    border-radius: 28px;
+    overflow: hidden;
+
+    background: #111;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75);
+
+    transform: translate(-50%, -50%);
+    transform-style: preserve-3d;
+
+    transition:
+        transform 0.7s cubic-bezier(.22, .61, .36, 1),
+        opacity 0.6s ease,
+        filter 0.6s ease;
+
+    will-change: transform, filter, opacity;
+    opacity: 0;
+}
+
+/* Compatible con iframe y video */
+.video-item iframe,
+.video-item video {
+    width: 100%;
+    height: 100%;
+    border: none;
+    object-fit: cover;
+}
+
+/* ============================= */
+/* FLECHAS LATERALES */
+/* ============================= */
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    color: #fff;
+    font-size: 28px;
+    transition: 0.3s ease;
+    z-index: 50;
+}
+
+.carousel-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.carousel-btn.left {
+    left: 25px;
+}
+
+.carousel-btn.right {
+    right: 25px;
+}
+
+/* ========================= */
+/* RESPONSIVE */
+/* ========================= */
+
+@media (max-width: 1024px) {
+
+    .video-carousel {
+        height: 550px;
+    }
+
+    .video-item {
+        width: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .video-section {
+        padding: 70px 0;
+    }
+
+    .video-title {
+        font-size: 30px;
+        margin-bottom: 50px;
+    }
+
+    .video-carousel {
+        height: 500px;
+    }
+
+    .video-item {
+        width: 240px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .video-carousel {
+        height: 420px;
+    }
+
+    .video-item {
+        width: 190px;
+    }
+}
+
+
+/* ========================= */
+/* LUNDEV 3D GALLERY SECTION */
+/* ========================= */
+
+.gallery-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    /* Usando la imagen generada con un overlay oscuro fuerte para asegurar legibilidad */
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
+        url('../.gemini/antigravity/brain/3996e620-fc36-4ea6-af39-94032bc50dec/elyon_yireh_building_bg_1771803787591.png') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* La rejilla ya no es necesaria con el fondo complejo */
+.gallery-section::before {
+    display: none;
+}
+
+/* El slider en sí coordina la rotación de todas las imágenes */
+.gallery-section .slider {
+    position: absolute;
+    --width: 200px;
+    --height: 280px;
+    --z-distance: 400px;
+    width: var(--width);
+    height: var(--height);
+    /* Centrado absoluto vertical y horizontal */
+    top: calc(50% - (var(--height) / 2));
+    left: calc(50% - (var(--width) / 2));
+    transform-style: preserve-3d;
+    z-index: 10;
+    animation: autoRun 24s linear infinite;
+    /* Ajuste fino para centrar la perspectiva y que pase por encima del modelo tapándolo */
+    margin-top: -80px;
+}
+
+@keyframes autoRun {
+    from {
+        /* Fuerte perspectiva (800) combinada con gran translación (550) agranda al frente */
+        transform: perspective(1000px) rotateX(-12deg) rotateY(0deg);
+    }
+
+    to {
+        transform: perspective(1000px) rotateX(-12deg) rotateY(360deg);
+    }
+}
+
+.gallery-section .slider:hover {
+    animation-play-state: paused;
+}
+
+.gallery-section .item {
+    position: absolute;
+    inset: 0;
+    /* Reducido para que la rotación sea un radio menor y el tamaño al frente sea prudente */
+    transform:
+        rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(var(--z-distance));
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    transition: filter 0.5s, opacity 0.5s;
+    /* 🔴 MEJORAS CRÍTICAS DE RENDIMIENTO */
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    /* No renderizar las cartas por detrás si no se ven */
+}
+
+.gallery-section .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    /* Mejor performance en mouseover masivos */
+}
+
+/* Capa frontal (Texto y Modelo) */
+.content-overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 50px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.model {
+    position: absolute;
+    bottom: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    /* La mascota debe estar al frente para cortar el texto y las cartas traseras */
+    z-index: 5;
+    pointer-events: auto;
+}
+
+.model img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 -10px 20px rgba(0, 0, 0, 0.3));
+}
+
+/* RESPONSIVE GALLERY */
+@media (max-width: 1024px) {
+    .gallery-section .slider {
+        --width: 160px;
+        --height: 230px;
+        --z-distance: 300px;
+    }
+
+    .model {
+        width: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-section .slider {
+        --width: 120px;
+        --height: 180px;
+        --z-distance: 220px;
+        margin-top: -50px;
+    }
+
+    .model {
+        width: 250px;
+        bottom: -5%;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-section .slider {
+        --width: 90px;
+        --height: 140px;
+        --z-distance: 160px;
+        margin-top: -30px;
+    }
+
+    .model {
+        width: 200px;
+        bottom: -5%;
+    }
+}
